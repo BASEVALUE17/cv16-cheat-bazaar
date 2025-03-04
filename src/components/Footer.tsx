@@ -13,10 +13,11 @@ const Footer = () => {
           {/* Logo and Info */}
           <div className="col-span-1 md:col-span-1">
             <Link to="/" className="flex items-center space-x-2 mb-4">
-              <div className="relative w-10 h-10 bg-primary rounded-full flex items-center justify-center overflow-hidden">
-                <span className="text-primary-foreground font-bold text-xl">CV</span>
-              </div>
-              <span className="font-bold text-xl text-foreground">CV16</span>
+              <img 
+                src="/lovable-uploads/582c012f-76b8-4f11-92fe-af77fd1151c4.png" 
+                alt="CV16" 
+                className="h-10" 
+              />
             </Link>
             <p className="text-muted-foreground text-sm mb-4">
               Premium game enhancements for the competitive player. Gain the edge with our state-of-the-art solutions.

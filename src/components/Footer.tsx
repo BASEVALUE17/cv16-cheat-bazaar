@@ -7,7 +7,7 @@ const Footer = () => {
   const currentYear = new Date().getFullYear();
   
   return (
-    <footer className="bg-card border-t">
+    <footer className="bg-card border-t border-border">
       <div className="container mx-auto px-4 py-12">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           {/* Logo and Info */}
@@ -16,7 +16,7 @@ const Footer = () => {
               <div className="relative w-10 h-10 bg-primary rounded-full flex items-center justify-center overflow-hidden">
                 <span className="text-primary-foreground font-bold text-xl">CV</span>
               </div>
-              <span className="font-bold text-xl">CV16</span>
+              <span className="font-bold text-xl text-foreground">CV16</span>
             </Link>
             <p className="text-muted-foreground text-sm mb-4">
               Premium game enhancements for the competitive player. Gain the edge with our state-of-the-art solutions.
@@ -39,7 +39,7 @@ const Footer = () => {
           
           {/* Quick Links */}
           <div>
-            <h3 className="font-semibold text-lg mb-4">Quick Links</h3>
+            <h3 className="font-semibold text-lg mb-4 text-foreground">Quick Links</h3>
             <ul className="space-y-2">
               <li>
                 <Link 
@@ -78,7 +78,7 @@ const Footer = () => {
           
           {/* Customer Support */}
           <div>
-            <h3 className="font-semibold text-lg mb-4">Customer Support</h3>
+            <h3 className="font-semibold text-lg mb-4 text-foreground">Customer Support</h3>
             <ul className="space-y-2">
               <li>
                 <Link 
@@ -117,21 +117,21 @@ const Footer = () => {
           
           {/* Contact Information */}
           <div>
-            <h3 className="font-semibold text-lg mb-4">Contact Us</h3>
+            <h3 className="font-semibold text-lg mb-4 text-foreground">Contact Us</h3>
             <ul className="space-y-3">
               <li className="flex items-center gap-2 text-muted-foreground">
-                <Mail size={16} />
+                <Mail size={16} className="text-primary" />
                 <span>support@cv16cheats.com</span>
               </li>
               <li className="flex items-center gap-2 text-muted-foreground">
-                <Phone size={16} />
+                <Phone size={16} className="text-primary" />
                 <span>+1 (555) 123-4567</span>
               </li>
             </ul>
           </div>
         </div>
         
-        <div className="border-t mt-8 pt-8 flex flex-col md:flex-row justify-between items-center">
+        <div className="border-t border-border mt-8 pt-8 flex flex-col md:flex-row justify-between items-center">
           <p className="text-sm text-muted-foreground mb-4 md:mb-0">
             &copy; {currentYear} CV16. All rights reserved.
           </p>

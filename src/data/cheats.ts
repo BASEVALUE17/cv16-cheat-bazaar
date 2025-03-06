@@ -1,7 +1,52 @@
-
 import { Cheat } from '../types';
 
 export const cheats: Cheat[] = [
+  {
+    id: '7',
+    title: 'Free Fire AI Aimbot',
+    game: 'Free Fire',
+    description: 'Advanced AI-powered aimbot for Free Fire with auto-headshot targeting and customizable settings. Version 1.1 includes improved stealth features and detection avoidance.',
+    features: [
+      'AI-powered targeting system',
+      'Headshot priority targeting',
+      'Bullet tracking adjustment',
+      'Customizable aim smoothness',
+      'Works with all weapons'
+    ],
+    price: 24.99,
+    discountPercentage: 10,
+    imageUrl: '/assets/cheat1.jpg',
+    videoUrl: 'https://www.youtube.com/embed/B1eYcvGT3Mw',
+    compatibility: ['Android', 'iOS', 'Emulator'],
+    releaseDate: '2023-12-15',
+    lastUpdate: '2024-01-10',
+    tags: ['Mobile', 'Aimbot', 'AI-Powered', 'Undetected'],
+    rating: 4.9,
+    totalReviews: 156
+  },
+  {
+    id: '8',
+    title: 'Emulator Bypass Pass',
+    game: 'Free Fire',
+    description: 'Bypass Free Fire emulator detection systems allowing mobile players to match with emulator users. Play on your PC without restrictions while keeping mobile-only advantages.',
+    features: [
+      'Complete emulator detection bypass',
+      'Works with BlueStacks, LDPlayer, and Gameloop',
+      'Mobile lobby access',
+      'Automatic updates with each game patch',
+      'Anti-ban protection system'
+    ],
+    price: 19.99,
+    discountPercentage: 0,
+    imageUrl: '/assets/cheat2.jpg',
+    videoUrl: 'https://www.youtube.com/embed/B1eYcvGT3Mw',
+    compatibility: ['Windows 10', 'Windows 11'],
+    releaseDate: '2024-01-05',
+    lastUpdate: '2024-02-20',
+    tags: ['Emulator', 'Bypass', 'Mobile Gaming', 'Undetected'],
+    rating: 4.7,
+    totalReviews: 89
+  },
   {
     id: '1',
     title: 'Ultimate Aimbot Pro',

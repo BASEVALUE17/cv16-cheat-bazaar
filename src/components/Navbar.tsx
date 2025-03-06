@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { 
@@ -51,7 +50,7 @@ export const Navbar = () => {
           {/* Logo */}
           <Link to="/" className="flex items-center space-x-2">
             <img 
-              src="/lovable-uploads/582c012f-76b8-4f11-92fe-af77fd1151c4.png" 
+              src="/lovable-uploads/3abd5153-0573-4be3-97a5-c72628229259.png" 
               alt="CV16" 
               className="h-10" 
             />

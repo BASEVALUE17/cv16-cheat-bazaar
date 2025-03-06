@@ -17,7 +17,6 @@ export const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
 
-  // Handle scroll effect
   useEffect(() => {
     const handleScroll = () => {
       if (window.scrollY > 10) {
@@ -31,11 +30,9 @@ export const Navbar = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // Handle search
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
     if (searchQuery.trim()) {
-      // Navigate to search results page with query
       console.log(`Searching for: ${searchQuery}`);
       // TODO: Implement search functionality
     }
@@ -47,16 +44,14 @@ export const Navbar = () => {
     }`}>
       <div className="container mx-auto px-4 py-3">
         <div className="flex items-center justify-between">
-          {/* Logo */}
           <Link to="/" className="flex items-center space-x-2">
             <img 
               src="/lovable-uploads/3abd5153-0573-4be3-97a5-c72628229259.png" 
               alt="CV16" 
-              className="h-10" 
+              className="h-10 logo-animated" 
             />
           </Link>
 
-          {/* Desktop Menu */}
           <div className="hidden md:flex items-center space-x-6">
             <Link to="/" className="font-medium hover:text-primary transition-colors">
               Home
@@ -72,9 +67,7 @@ export const Navbar = () => {
             </Link>
           </div>
 
-          {/* Desktop Actions */}
           <div className="hidden md:flex items-center space-x-4">
-            {/* Search */}
             <form onSubmit={handleSearch} className="relative">
               <Input
                 type="search"
@@ -93,7 +86,6 @@ export const Navbar = () => {
               </Button>
             </form>
 
-            {/* Cart */}
             <Link to="/cart">
               <Button variant="ghost" size="icon" className="relative">
                 <ShoppingCart size={20} />
@@ -105,7 +97,6 @@ export const Navbar = () => {
               </Button>
             </Link>
 
-            {/* Login */}
             <Link to="/login">
               <Button variant="outline" size="sm" className="flex items-center gap-1">
                 <LogIn size={16} />
@@ -114,7 +105,6 @@ export const Navbar = () => {
             </Link>
           </div>
 
-          {/* Mobile Menu Button */}
           <div className="flex items-center space-x-3 md:hidden">
             <Link to="/cart">
               <Button variant="ghost" size="icon" className="relative">
@@ -137,7 +127,6 @@ export const Navbar = () => {
         </div>
       </div>
 
-      {/* Mobile Menu */}
       {isMenuOpen && (
         <div className="md:hidden bg-background/95 backdrop-blur-md shadow-lg animate-fade-in">
           <div className="container mx-auto px-4 py-4 flex flex-col space-y-4">

@@ -15,7 +15,7 @@ const Footer = () => {
               <img 
                 src="/lovable-uploads/3abd5153-0573-4be3-97a5-c72628229259.png" 
                 alt="CV16" 
-                className="h-10" 
+                className="h-10 logo-animated" 
               />
             </Link>
             <p className="text-muted-foreground text-sm mb-4">

@@ -19,6 +19,7 @@ import { useCart } from '@/context/CartContext';
 import { cheats } from '@/data/cheats';
 import { Cheat } from '@/types';
 import { Dialog, DialogContent, DialogTrigger, DialogClose } from '@/components/ui/dialog';
+import { convertToINR, formatINR } from '@/utils/currency';
 
 const ProductDetail = () => {
   const { id } = useParams<{ id: string }>();
@@ -54,6 +55,10 @@ const ProductDetail = () => {
   const discountedPrice = cheat.discountPercentage 
     ? cheat.price * (1 - cheat.discountPercentage / 100) 
     : null;
+    
+  // Convert prices to INR
+  const priceInINR = convertToINR(cheat.price);
+  const discountedPriceInINR = discountedPrice ? convertToINR(discountedPrice) : null;
   
   return (
     <div className="container mx-auto px-4 py-12">
@@ -152,12 +157,12 @@ const ProductDetail = () => {
           
           <div className="flex items-center gap-4 mb-8">
             <div className="flex flex-col">
-              {discountedPrice ? (
+              {discountedPriceInINR ? (
                 <>
-                  <span className="text-3xl font-bold">${discountedPrice.toFixed(2)}</span>
+                  <span className="text-3xl font-bold">{formatINR(discountedPriceInINR)}</span>
                   <div className="flex items-center gap-2">
                     <span className="text-lg text-muted-foreground line-through">
-                      ${cheat.price.toFixed(2)}
+                      {formatINR(priceInINR)}
                     </span>
                     <Badge variant="default" className="text-xs">
                       {cheat.discountPercentage}% OFF
@@ -165,7 +170,7 @@ const ProductDetail = () => {
                   </div>
                 </>
               ) : (
-                <span className="text-3xl font-bold">${cheat.price.toFixed(2)}</span>
+                <span className="text-3xl font-bold">{formatINR(priceInINR)}</span>
               )}
             </div>
             

@@ -1,3 +1,4 @@
+
 import { Cheat } from '../types';
 
 export const cheats: Cheat[] = [
@@ -15,7 +16,7 @@ export const cheats: Cheat[] = [
     ],
     price: 24.99,
     discountPercentage: 10,
-    imageUrl: '/assets/cheat1.jpg',
+    imageUrl: '/lovable-uploads/f341d49d-133a-4a7e-8b66-d9639adf7490.png',
     videoUrl: 'https://www.youtube.com/embed/B1eYcvGT3Mw',
     compatibility: ['Android', 'iOS', 'Emulator'],
     releaseDate: '2023-12-15',

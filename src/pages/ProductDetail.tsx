@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { 
@@ -27,13 +26,11 @@ const ProductDetail = () => {
   const [isVideoOpen, setIsVideoOpen] = useState(false);
   const { addToCart } = useCart();
   
-  // Find the cheat by ID
   useEffect(() => {
     const foundCheat = cheats.find(c => c.id === id);
     if (foundCheat) {
       setCheat(foundCheat);
     }
-    // Scroll to top when component mounts
     window.scrollTo(0, 0);
   }, [id]);
   
@@ -51,18 +48,15 @@ const ProductDetail = () => {
     );
   }
   
-  // Calculate discounted price if applicable
   const discountedPrice = cheat.discountPercentage 
     ? cheat.price * (1 - cheat.discountPercentage / 100) 
     : null;
     
-  // Convert prices to INR
   const priceInINR = convertToINR(cheat.price);
   const discountedPriceInINR = discountedPrice ? convertToINR(discountedPrice) : null;
   
   return (
     <div className="container mx-auto px-4 py-12">
-      {/* Breadcrumb */}
       <div className="mb-6">
         <Link
           to="/products"
@@ -74,13 +68,20 @@ const ProductDetail = () => {
       </div>
       
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-12">
-        {/* Product Image & Video Section */}
         <div className="bg-card rounded-xl border overflow-hidden relative">
-          <img 
-            src={cheat.imageUrl} 
-            alt={cheat.title} 
-            className="w-full aspect-video object-cover"
-          />
+          {cheat?.id === '7' ? (
+            <img 
+              src={cheat.imageUrl} 
+              alt={cheat.title} 
+              className="w-full object-cover animate-blur-in"
+            />
+          ) : (
+            <img 
+              src={cheat?.imageUrl} 
+              alt={cheat?.title} 
+              className="w-full aspect-video object-cover"
+            />
+          )}
           
           {cheat.videoUrl && (
             <Button 
@@ -93,7 +94,6 @@ const ProductDetail = () => {
             </Button>
           )}
           
-          {/* Video Dialog */}
           {cheat.videoUrl && (
             <Dialog open={isVideoOpen} onOpenChange={setIsVideoOpen}>
               <DialogContent className="max-w-4xl p-0 overflow-hidden bg-black">
@@ -116,7 +116,6 @@ const ProductDetail = () => {
           )}
         </div>
         
-        {/* Product Info */}
         <div>
           <div className="flex items-start justify-between mb-2">
             <div>
@@ -202,7 +201,6 @@ const ProductDetail = () => {
         </div>
       </div>
       
-      {/* Tabs Section */}
       <Tabs defaultValue="features" className="mb-12">
         <TabsList className="mb-6">
           <TabsTrigger value="features">Features</TabsTrigger>
@@ -271,7 +269,6 @@ const ProductDetail = () => {
             </div>
           </div>
           
-          {/* Sample Reviews */}
           <div className="space-y-6">
             <div className="p-4 border rounded-lg">
               <div className="flex items-center justify-between mb-2">

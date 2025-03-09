@@ -16,6 +16,9 @@ import Contact from "./pages/Contact";
 import NotFound from "./pages/NotFound";
 import Layout from "./components/Layout";
 
+// Add a CodeBackground component
+import CodeBackground from "./components/CodeBackground";
+
 const queryClient = new QueryClient();
 
 const App = () => (
@@ -24,6 +27,7 @@ const App = () => (
       <CartProvider>
         <Toaster />
         <Sonner />
+        <CodeBackground />
         <BrowserRouter>
           <Layout>
             <Routes>

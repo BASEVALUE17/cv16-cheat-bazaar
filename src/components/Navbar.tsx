@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { 
@@ -16,6 +17,7 @@ export const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
+  const [logoVisible, setLogoVisible] = useState(true);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -28,6 +30,16 @@ export const Navbar = () => {
 
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+  
+  // Logo animation effect
+  useEffect(() => {
+    const animateLogo = setInterval(() => {
+      setLogoVisible(false);
+      setTimeout(() => setLogoVisible(true), 500);
+    }, 5000);
+    
+    return () => clearInterval(animateLogo);
   }, []);
 
   const handleSearch = (e: React.FormEvent) => {
@@ -48,7 +60,11 @@ export const Navbar = () => {
             <img 
               src="/lovable-uploads/3abd5153-0573-4be3-97a5-c72628229259.png" 
               alt="CV16" 
-              className="h-10 logo-animated" 
+              className={`h-10 transition-all duration-500 ${
+                logoVisible 
+                  ? 'opacity-100 scale-100 rotate-0' 
+                  : 'opacity-0 scale-90 rotate-12'
+              }`}
             />
           </Link>
 

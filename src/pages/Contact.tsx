@@ -1,10 +1,25 @@
-
 import React, { useState } from 'react';
-import { Mail, Phone, MessageCircle, Send } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
-import { useToast } from '@/components/ui/use-toast';
+import { 
+  Card, 
+  CardContent, 
+  CardDescription, 
+  CardFooter, 
+  CardHeader, 
+  CardTitle 
+} from '@/components/ui/card';
+import { 
+  MapPin, 
+  Phone, 
+  Mail, 
+  Clock, 
+  MessageSquare,
+  Check,
+  RotateCw
+} from 'lucide-react';
+import { useToast } from '@/hooks/use-toast';
 
 const Contact = () => {
   const { toast } = useToast();
@@ -173,7 +188,7 @@ const Contact = () => {
             
             <div className="flex items-start gap-4">
               <div className="bg-primary/10 p-3 rounded-full text-primary">
-                <MessageCircle className="h-6 w-6" />
+                <MessageSquare className="h-6 w-6" />
               </div>
               <div>
                 <h3 className="font-medium text-lg">Live Chat</h3>

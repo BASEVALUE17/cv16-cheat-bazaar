@@ -1,234 +1,159 @@
-import React, { useState } from 'react';
+import React from 'react';
+import { useForm } from 'react-hook-form';
+import { z } from 'zod';
+import { zodResolver } from '@hookform/resolvers/zod';
 import { Button } from '@/components/ui/button';
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
-import { 
-  Card, 
-  CardContent, 
-  CardDescription, 
-  CardFooter, 
-  CardHeader, 
-  CardTitle 
-} from '@/components/ui/card';
+import { toast } from '@/components/ui/use-toast';
 import { 
   MapPin, 
   Phone, 
   Mail, 
   Clock, 
-  MessageSquare,
-  Check,
+  Send,
   RotateCw
 } from 'lucide-react';
-import { useToast } from '@/hooks/use-toast';
+
+const formSchema = z.object({
+  name: z.string().min(2, {
+    message: 'Name must be at least 2 characters.',
+  }),
+  email: z.string().email({
+    message: 'Please enter a valid email address.',
+  }),
+  message: z.string().min(10, {
+    message: 'Message must be at least 10 characters.',
+  }),
+});
 
 const Contact = () => {
-  const { toast } = useToast();
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    subject: '',
-    message: ''
+  const form = useForm<z.infer<typeof formSchema>>({
+    resolver: zodResolver(formSchema),
+    defaultValues: {
+      name: '',
+      email: '',
+      message: '',
+    },
   });
-  const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    const { name, value } = e.target;
-    setFormData(prev => ({ ...prev, [name]: value }));
-  };
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    setIsSubmitting(true);
-    
+  const onSubmit = (values: z.infer<typeof formSchema>) => {
     // Simulate form submission
     setTimeout(() => {
-      setIsSubmitting(false);
       toast({
-        title: "Message sent!",
-        description: "We've received your message and will respond shortly.",
+        title: 'Message Sent!',
+        description: 'Your message has been successfully sent to our team.',
       });
-      setFormData({
-        name: '',
-        email: '',
-        subject: '',
-        message: ''
-      });
-    }, 1500);
+      form.reset();
+    }, 1000);
   };
 
   return (
-    <div className="container mx-auto px-4 py-12">
-      <div className="text-center mb-12">
-        <h1 className="text-4xl font-bold mb-4">Contact Us</h1>
-        <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-          Have questions, feedback, or need assistance? Reach out to our team and we'll get back to you as soon as possible.
-        </p>
-      </div>
+    <div className="container mx-auto py-12 px-4">
+      <h1 className="text-3xl font-bold text-center mb-8">Contact Us</h1>
       
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 mb-16">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
         {/* Contact Form */}
-        <div className="bg-card border rounded-xl p-8">
-          <h2 className="text-2xl font-bold mb-6">Send Us a Message</h2>
-          <form onSubmit={handleSubmit} className="space-y-6">
-            <div>
-              <label htmlFor="name" className="block text-sm font-medium mb-2">
-                Your Name
-              </label>
-              <Input
-                id="name"
+        <div className="p-6 rounded-lg shadow-md bg-card">
+          <Form {...form}>
+            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+              <FormField
+                control={form.control}
                 name="name"
-                value={formData.name}
-                onChange={handleChange}
-                placeholder="John Doe"
-                required
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Name</FormLabel>
+                    <FormControl>
+                      <Input placeholder="Your Name" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
               />
-            </div>
-            
-            <div>
-              <label htmlFor="email" className="block text-sm font-medium mb-2">
-                Email Address
-              </label>
-              <Input
-                id="email"
+              <FormField
+                control={form.control}
                 name="email"
-                type="email"
-                value={formData.email}
-                onChange={handleChange}
-                placeholder="john@example.com"
-                required
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Email</FormLabel>
+                    <FormControl>
+                      <Input placeholder="Your Email" type="email" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
               />
-            </div>
-            
-            <div>
-              <label htmlFor="subject" className="block text-sm font-medium mb-2">
-                Subject
-              </label>
-              <Input
-                id="subject"
-                name="subject"
-                value={formData.subject}
-                onChange={handleChange}
-                placeholder="How can we help you?"
-                required
-              />
-            </div>
-            
-            <div>
-              <label htmlFor="message" className="block text-sm font-medium mb-2">
-                Message
-              </label>
-              <Textarea
-                id="message"
+              <FormField
+                control={form.control}
                 name="message"
-                value={formData.message}
-                onChange={handleChange}
-                placeholder="Your message here..."
-                rows={5}
-                required
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Message</FormLabel>
+                    <FormControl>
+                      <Textarea
+                        placeholder="Write your message here..."
+                        className="resize-none"
+                        {...field}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
               />
-            </div>
-            
-            <Button 
-              type="submit" 
-              className="w-full" 
-              disabled={isSubmitting}
-            >
-              {isSubmitting ? (
-                <>
-                  <span className="mr-2">Sending...</span>
-                  <span className="animate-spin">
-                    <RotateCw className="h-4 w-4" />
-                  </span>
-                </>
-              ) : (
-                <>
-                  <Send className="mr-2 h-4 w-4" />
-                  Send Message
-                </>
-              )}
-            </Button>
-          </form>
+              <Button type="submit" className="w-full">
+                Send Message <Send className="ml-2 h-4 w-4" />
+              </Button>
+            </form>
+          </Form>
         </div>
         
-        {/* Contact Info */}
-        <div>
-          <h2 className="text-2xl font-bold mb-6">Contact Information</h2>
-          <div className="space-y-6">
-            <div className="flex items-start gap-4">
-              <div className="bg-primary/10 p-3 rounded-full text-primary">
-                <Mail className="h-6 w-6" />
-              </div>
-              <div>
-                <h3 className="font-medium text-lg">Email</h3>
-                <p className="text-muted-foreground mb-1">For general inquiries:</p>
-                <a href="mailto:info@cv16.com" className="text-primary hover:underline">
-                  info@cv16.com
-                </a>
-                <p className="text-muted-foreground mt-2 mb-1">For support:</p>
-                <a href="mailto:support@cv16.com" className="text-primary hover:underline">
-                  support@cv16.com
-                </a>
-              </div>
-            </div>
-            
-            <div className="flex items-start gap-4">
-              <div className="bg-primary/10 p-3 rounded-full text-primary">
-                <Phone className="h-6 w-6" />
-              </div>
-              <div>
-                <h3 className="font-medium text-lg">Phone</h3>
-                <p className="text-muted-foreground mb-1">Customer Support:</p>
-                <a href="tel:+911234567890" className="text-primary hover:underline">
-                  +91 1234 567 890
-                </a>
-                <p className="text-muted-foreground mt-2 mb-1">Business Hours:</p>
-                <p>Monday - Friday: 9 AM - 6 PM IST</p>
-              </div>
-            </div>
-            
-            <div className="flex items-start gap-4">
-              <div className="bg-primary/10 p-3 rounded-full text-primary">
-                <MessageSquare className="h-6 w-6" />
-              </div>
-              <div>
-                <h3 className="font-medium text-lg">Live Chat</h3>
-                <p className="text-muted-foreground mb-3">
-                  Need immediate assistance? Our live chat support is available 24/7.
-                </p>
-                <Button variant="outline">
-                  Start Live Chat
-                </Button>
-              </div>
-            </div>
-          </div>
+        {/* Contact Information */}
+        <div className="p-6 rounded-lg shadow-md bg-card">
+          <h2 className="text-xl font-semibold mb-4">Our Information</h2>
           
-          <div className="mt-12">
-            <h3 className="font-medium text-lg mb-4">Follow Us</h3>
-            <div className="flex gap-4">
-              <a href="#" className="bg-card border rounded-full p-3 hover:bg-primary/10 transition-colors">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-5 w-5">
-                  <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path>
-                </svg>
-              </a>
-              <a href="#" className="bg-card border rounded-full p-3 hover:bg-primary/10 transition-colors">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-5 w-5">
-                  <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
-                  <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
-                  <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
-                </svg>
-              </a>
-              <a href="#" className="bg-card border rounded-full p-3 hover:bg-primary/10 transition-colors">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-5 w-5">
-                  <path d="M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17.3-18 11.6 2.2.1 4.4-.6 6-2C3 15.5.5 9.6 3 5c2.2 2.6 5.6 4.1 9 4-.9-4.2 4-6.6 7-3.8 1.1 0 3-1.2 3-1.2z"></path>
-                </svg>
-              </a>
-              <a href="#" className="bg-card border rounded-full p-3 hover:bg-primary/10 transition-colors">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-5 w-5">
-                  <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path>
-                  <rect x="2" y="9" width="4" height="12"></rect>
-                  <circle cx="4" cy="4" r="2"></circle>
-                </svg>
-              </a>
+          <div className="space-y-4">
+            <div className="flex items-center gap-3">
+              <MapPin className="h-5 w-5 text-muted-foreground" />
+              <div>
+                <p className="font-medium">Address</p>
+                <p className="text-muted-foreground">
+                  123 Tech Park, Innovation Street, Cityville
+                </p>
+              </div>
+            </div>
+            
+            <div className="flex items-center gap-3">
+              <Phone className="h-5 w-5 text-muted-foreground" />
+              <div>
+                <p className="font-medium">Phone</p>
+                <p className="text-muted-foreground">+1 (555) 123-4567</p>
+              </div>
+            </div>
+            
+            <div className="flex items-center gap-3">
+              <Mail className="h-5 w-5 text-muted-foreground" />
+              <div>
+                <p className="font-medium">Email</p>
+                <p className="text-muted-foreground">support@example.com</p>
+              </div>
+            </div>
+            
+            <div className="flex items-center gap-3">
+              <Clock className="h-5 w-5 text-muted-foreground" />
+              <div>
+                <p className="font-medium">Business Hours</p>
+                <p className="text-muted-foreground">
+                  Monday - Friday: 9am to 5pm
+                </p>
+              </div>
             </div>
           </div>
         </div>

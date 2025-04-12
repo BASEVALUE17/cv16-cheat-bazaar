@@ -2,6 +2,7 @@
 import React, { useEffect } from 'react';
 import Navbar from './Navbar';
 import Footer from './Footer';
+import { Outlet } from 'react-router-dom';
 
 // Code snippets that will float in the background
 const codeSnippets = [
@@ -24,11 +25,7 @@ const codeSnippets = [
   "const recoilValues = [0.1, 0.2, 0.15, 0.05];"
 ];
 
-interface LayoutProps {
-  children: React.ReactNode;
-}
-
-const Layout: React.FC<LayoutProps> = ({ children }) => {
+const Layout = () => {
   useEffect(() => {
     // Create floating code snippets
     const codeBackground = document.createElement('div');
@@ -63,7 +60,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
     <div className="flex flex-col min-h-screen">
       <Navbar />
       <main className="flex-grow pt-16">
-        {children}
+        <Outlet />
       </main>
       <Footer />
     </div>

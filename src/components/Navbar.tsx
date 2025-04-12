@@ -6,14 +6,26 @@ import {
   ShoppingCart, 
   Menu, 
   X,
-  LogIn
+  LogIn,
+  LogOut,
+  User
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { useCart } from '@/context/CartContext';
+import { useAuth } from '@/context/AuthContext';
+import { 
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 
 export const Navbar = () => {
   const { totalItems } = useCart();
+  const { user, isAuthenticated, logout } = useAuth();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
@@ -113,12 +125,35 @@ export const Navbar = () => {
               </Button>
             </Link>
 
-            <Link to="/login">
-              <Button variant="outline" size="sm" className="flex items-center gap-1">
-                <LogIn size={16} />
-                <span>Login</span>
-              </Button>
-            </Link>
+            {isAuthenticated ? (
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button variant="outline" size="sm" className="flex items-center gap-1">
+                    <User size={16} />
+                    <span className="max-w-[100px] truncate">{user?.name || 'User'}</span>
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="end" className="w-56">
+                  <DropdownMenuLabel>My Account</DropdownMenuLabel>
+                  <DropdownMenuSeparator />
+                  <DropdownMenuItem>
+                    <User className="mr-2 h-4 w-4" />
+                    <span>Profile</span>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem onClick={logout}>
+                    <LogOut className="mr-2 h-4 w-4" />
+                    <span>Log out</span>
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
+            ) : (
+              <Link to="/login">
+                <Button variant="outline" size="sm" className="flex items-center gap-1">
+                  <LogIn size={16} />
+                  <span>Login</span>
+                </Button>
+              </Link>
+            )}
           </div>
 
           <div className="flex items-center space-x-3 md:hidden">
@@ -193,14 +228,28 @@ export const Navbar = () => {
                 </Button>
               </form>
             </div>
-            <Link 
-              to="/login" 
-              className="flex items-center justify-center gap-2 py-2 px-4 bg-secondary rounded-md"
-              onClick={() => setIsMenuOpen(false)}
-            >
-              <LogIn size={18} />
-              <span>Login</span>
-            </Link>
+            {isAuthenticated ? (
+              <Button 
+                variant="destructive" 
+                className="flex items-center justify-center gap-2"
+                onClick={() => {
+                  logout();
+                  setIsMenuOpen(false);
+                }}
+              >
+                <LogOut size={18} />
+                <span>Log Out</span>
+              </Button>
+            ) : (
+              <Link 
+                to="/login" 
+                className="flex items-center justify-center gap-2 py-2 px-4 bg-secondary rounded-md"
+                onClick={() => setIsMenuOpen(false)}
+              >
+                <LogIn size={18} />
+                <span>Login</span>
+              </Link>
+            )}
           </div>
         </div>
       )}
